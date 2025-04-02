@@ -3,6 +3,7 @@ definePageMeta({
   middleware: 'auth'
 });
 import type { OrderListResponse } from '~/types'
+import DonateModal from '~/components/DonateModal.vue';
 
 const { find } = useStrapi();
 
@@ -10,6 +11,8 @@ const selectedType = ref("all");
 const orders = ref([]);
 const loading = ref(false);
 const error = ref("");
+const selectedOrderId = ref<number | null>(null);
+const showModal = ref(false);
 
 const fetchOrders = async () => {
   try {
@@ -33,8 +36,13 @@ fetchOrders();
 
 const donateOrder = (orderId: number) => {
   console.log("Donating order:", orderId);
-
+  selectedOrderId.value = orderId;
+  showModal.value = true;
 };
+
+const closeModal = () => {
+  showModal.value = false;
+}
 </script>
 
 <template>
@@ -64,5 +72,12 @@ const donateOrder = (orderId: number) => {
     <div v-else>
       <p>No orders found.</p>
     </div>
+
+    <DonateModal
+      :isVisible="showModal"
+      :orderId="selectedOrderId"
+      @close="closeModal"
+      @donated="fetchOrders" 
+    />
   </section>
 </template>
