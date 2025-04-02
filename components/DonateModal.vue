@@ -36,8 +36,6 @@ const emit = defineEmits();
 const shippingFirstName = ref("");
 const shippingPostalCode = ref("");
 
-
-
 const close = () => {
     emit('close');
 };
@@ -46,14 +44,22 @@ console.log("orderId " + props.orderId);
 
 const submitDonation = async () => {
     try {
+        console.log('shippingFirstName:', shippingFirstName.value);
+        console.log('shippingPostalCode:', shippingPostalCode.value);
+        console.log('shippingPostalCode:', props.orderId);
         const response = await $fetch(`http://localhost:1337/api/orders/${props.orderId}/donate`, {
             method: 'POST',
-            body: {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
                 order_meta: {
-                    shipping_firstname: shippingFirstName.value,
-                    shipping_postalcode: shippingPostalCode.value
+                    shipping_postcode: shippingPostalCode.value,
+                    shipping_firstname: shippingFirstName.value
                 }
-            });
+            })
+        });
 
         emit('donated');
         console.log("test donated")
