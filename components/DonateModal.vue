@@ -17,6 +17,10 @@
                     <input v-model="shippingFirstName" placeholder="Write a firstname" type="text"
                         id="shippingFirstName" class="form-control" required />
                 </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Donate</button>
+                    <button type="button" class="btn btn-secondary" @click="close">Cancel</button>
+                </div>
             </form>
         </div>
     </div>
