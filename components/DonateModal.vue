@@ -25,3 +25,47 @@
         </div>
     </div>
 </template>
+
+<script setup lang="ts">
+defineProps({
+    isVisible: Boolean,
+    orderId: Number
+});
+
+const emit = defineEmits<{
+    (event: 'close'): void;
+    (event: 'donated'): void;
+}>();
+
+const close = () => {
+    emit('close');
+};
+
+const shippingFirstName = ref("");
+const shippingPostalCode = ref("");
+</script>
+
+<style scoped>
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+}
+
+button {
+    margin-right: 10px;
+}
+</style>
