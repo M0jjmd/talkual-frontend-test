@@ -40,13 +40,8 @@ const close = () => {
     emit('close');
 };
 
-console.log("orderId " + props.orderId);
-
 const submitDonation = async () => {
     try {
-        console.log('shippingFirstName:', shippingFirstName.value);
-        console.log('shippingPostalCode:', shippingPostalCode.value);
-        console.log('shippingPostalCode:', props.orderId);
         const response = await $fetch(`http://localhost:1337/api/orders/${props.orderId}/donate`, {
             method: 'POST',
             headers: {
@@ -62,7 +57,6 @@ const submitDonation = async () => {
         });
 
         emit('donated');
-        console.log("test donated")
         close();
     } catch (error) {
         console.error("Error donating order:", error);

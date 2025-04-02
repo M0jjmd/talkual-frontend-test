@@ -35,7 +35,6 @@ const fetchOrders = async () => {
 fetchOrders();
 
 const donateOrder = (orderId: number) => {
-  console.log("Donating order:", orderId);
   selectedOrderId.value = orderId;
   showModal.value = true;
 };
@@ -73,11 +72,6 @@ const closeModal = () => {
       <p>No orders found.</p>
     </div>
 
-    <DonateModal
-      :isVisible="showModal"
-      :orderId="selectedOrderId"
-      @close="closeModal"
-      @donated="fetchOrders" 
-    />
+    <DonateModal :isVisible="showModal" :orderId="selectedOrderId" @close="closeModal" @donated="fetchOrders" />
   </section>
 </template>
