@@ -5,6 +5,9 @@ definePageMeta({
 import type { OrderListResponse } from '~/types'
 
 const { find } = useStrapi();
+
+const selectedType = ref("all");
+
 const { data } = await find<OrderListResponse>('orders', {
   populate: ['order_items', 'order_meta'],
   filters: {
@@ -18,6 +21,15 @@ const orders = ref(data);
   <section class="p-3">
     <h1 class="text-center">Order List</h1>
     <!-- Write rest of the code here -->
+    <div class="mb-3">
+      <label for="orderType" class="form-label">Filter by order type</label>
+      <select id="orderType" class="form-select">
+        <option value="all">All</option>
+        <option value="normal">Normal</option>
+        <option value="donation">Donation</option>
+      </select>
+    </div>
+
     <div v-if="orders.length">
       <div v-for="order in orders" :key="order.id" class="card p-3 mb-2">
         <p><strong>SKU:</strong> {{ order.attributes.order_items.data[0]?.attributes.sku || 'N/A' }}</p>
