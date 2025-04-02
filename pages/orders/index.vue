@@ -7,14 +7,18 @@ import type { OrderListResponse } from '~/types'
 const { find } = useStrapi();
 
 const selectedType = ref("all");
+const orders = ref([]);
 
-const { data } = await find<OrderListResponse>('orders', {
-  populate: ['order_items', 'order_meta'],
-  filters: {
-    type: { $eq: 'normal' }
-  }
-});
-const orders = ref(data);
+const fetchOrders = async () => {
+  const filters = selectedType.value !== "all" ? { type: { $eq: selectedType.value } } : {};
+
+  const { data } = await find<OrderListResponse>('orders', {
+    populate: ['order_items', 'order_meta'],
+    filters
+  });
+  orders.value = data;
+}
+fetchOrders();
 </script>
 
 <template>
@@ -23,7 +27,7 @@ const orders = ref(data);
     <!-- Write rest of the code here -->
     <div class="mb-3">
       <label for="orderType" class="form-label">Filter by order type</label>
-      <select id="orderType" class="form-select">
+      <select id="orderType" class="form-select" v-model="selectedType" @change="fetchOrders">
         <option value="all">All</option>
         <option value="normal">Normal</option>
         <option value="donation">Donation</option>
