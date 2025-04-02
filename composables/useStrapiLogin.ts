@@ -7,7 +7,13 @@ export default () => {
         const router = useRouter();
 
         try {
-            await login({ identifier: email.value, password: password.value });
+            const response = await login({ identifier: email.value, password: password.value });
+
+            const token = response.jwt;
+            if (token) {
+                localStorage.setItem("token", token);
+            }
+
             await router.push('/orders')
         } catch (e) {
             console.error(e)
