@@ -8,17 +8,33 @@ const { find } = useStrapi();
 
 const selectedType = ref("all");
 const orders = ref([]);
+const loading = ref(false);
+const error = ref("");
 
 const fetchOrders = async () => {
-  const filters = selectedType.value !== "all" ? { type: { $eq: selectedType.value } } : {};
+  try {
+    const filters = selectedType.value !== "all" ? { type: { $eq: selectedType.value } } : {};
 
-  const { data } = await find<OrderListResponse>('orders', {
-    populate: ['order_items', 'order_meta'],
-    filters
-  });
-  orders.value = data;
-}
+    const { data } = await find<OrderListResponse>('orders', {
+      populate: ['order_items', 'order_meta'],
+      filters
+    });
+
+    orders.value = data;
+  } catch (error) {
+    error.value = "Error loading orders. Please try again.";
+    console.error(err);
+  } finally {
+    loading.value = false;
+  }
+};
+
 fetchOrders();
+
+const donateOrder = (orderId: number) => {
+  console.log("Donating order:", orderId);
+
+};
 </script>
 
 <template>
