@@ -27,22 +27,41 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
+const props = defineProps({
     isVisible: Boolean,
     orderId: Number
 });
 
-const emit = defineEmits<{
-    (event: 'close'): void;
-    (event: 'donated'): void;
-}>();
+const emit = defineEmits();
+const shippingFirstName = ref("");
+const shippingPostalCode = ref("");
+
+
 
 const close = () => {
     emit('close');
 };
 
-const shippingFirstName = ref("");
-const shippingPostalCode = ref("");
+console.log("orderId " + props.orderId);
+
+const submitDonation = async () => {
+    try {
+        const response = await $fetch(`http://localhost:1337/api/orders/${props.orderId}/donate`, {
+            method: 'POST',
+            body: {
+                order_meta: {
+                    shipping_firstname: shippingFirstName.value,
+                    shipping_postalcode: shippingPostalCode.value
+                }
+            });
+
+        emit('donated');
+        console.log("test donated")
+        close();
+    } catch (error) {
+        console.error("Error donating order:", error);
+    }
+};
 </script>
 
 <style scoped>
