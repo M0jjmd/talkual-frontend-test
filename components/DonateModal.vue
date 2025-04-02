@@ -1,7 +1,10 @@
 <template>
     <div v-if="isVisible" class="modal-overlay" @click.self="close">
         <div class="modal-content">
-            <h2>Donate Order</h2>
+
+            <button class="close-btn" @click="close">x</button>
+
+            <h2 class="form-title">Donate Form</h2>
             <form @submit.prevent="submitDonation">
                 <div class="mb-3">
                     <label for="shippingPostalCode" class="form-label">Postal code</label>
@@ -17,9 +20,9 @@
                     <input v-model="shippingFirstName" placeholder="Write a firstname" type="text"
                         id="shippingFirstName" class="form-control" required />
                 </div>
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-primary">Donate</button>
-                    <button type="button" class="btn btn-secondary" @click="close">Cancel</button>
+                <div class="mb-3 d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary" @click="close">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
         </div>
@@ -79,12 +82,60 @@ const submitDonation = async () => {
 
 .modal-content {
     background: white;
-    padding: 20px;
+    padding: 1.3rem;
     border-radius: 8px;
-    width: 400px;
+    width: 35rem;
+}
+
+.close-btn {
+    position: absolute;
+    top: 0.625rem;
+    right: 0.625rem;
+    font-size: 1.25rem;
+    background: transparent;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 1;
+}
+
+.form-title {
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.form-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+}
+
+.mb-3:nth-child(2) {
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+.mb-3:nth-child(2)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+}
+
+.form-control,
+.form-select {
+    width: 70%;
 }
 
 button {
-    margin-right: 10px;
+    margin-right: 0.6rem;
 }
 </style>
