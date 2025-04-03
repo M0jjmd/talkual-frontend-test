@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { email, password, loginUser } = useStrapiLogin();
+const { email, password, loginUser, errorMessage } = useStrapiLogin();
 const onSubmit = async () => {
   await loginUser()
 }
@@ -26,6 +26,9 @@ const onSubmit = async () => {
               </div>
               <div class="col-12 text-center">
                 <button type="submit" class="btn btn-primary">Sign in</button>
+              </div>
+              <div v-if="errorMessage" class="col-12">
+                <p class="text-danger">{{ errorMessage }}</p>
               </div>
             </form>
           </div>

@@ -1,6 +1,7 @@
 export default () => {
     const email = ref('');
     const password = ref('');
+    const errorMessage = ref('');
 
     const loginUser = async () => {
         const { login } = useStrapiAuth();
@@ -17,11 +18,13 @@ export default () => {
             await router.push('/orders')
         } catch (e) {
             console.error(e)
+            errorMessage.value = 'Credenciales incorrectas';
         }
     }
     return {
         email,
         password,
-        loginUser
+        loginUser,
+        errorMessage
     }
 }
