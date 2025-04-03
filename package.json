@@ -12,10 +12,6 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/strapi": "^1.9.3",
-    "@types/jest": "^29.5.14",
-    "@vue/test-utils": "^2.4.6",
-    "@vue/vue3-jest": "^29.2.6",
-    "jest": "^29.7.0",
     "nuxt": "^3.7.4",
     "sass": "^1.68.0",
     "vue": "^3.3.4",
